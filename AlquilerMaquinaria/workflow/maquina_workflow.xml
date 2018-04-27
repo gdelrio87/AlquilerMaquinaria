@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    	<record id="wkf_maquina" model="workflow">
+			<field name="name">maquina.basic</field>
+			<field name="osv">maquina</field>
+			<field name="on_create">True</field>
+		</record>
+    	
+    	<!-- Declaración de nodos -->
+		<record id="act_maquina_almacen" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_maquina" />
+			<field name="flow_start">True</field>
+			<field name="name">En almacen</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'almacen'})</field>
+		</record>
+    	
+    	<record id="act_maquina_alquilada" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_maquina" />
+			<field name="name">Alquilada</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'alquilado'})</field>
+		</record>
+		
+		<record id="act_maquina_averia" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_maquina" />
+			<field name="name">Averia</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'averia'})</field>
+		</record>
+		
+		<record id="act_maquina_devuelto" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_maquina" />
+			<field name="name">Devuelto</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'devuelto'})</field>
+		</record>
+    	
+    	<record id="act_maquina_fin" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_maquina" />
+			<field name="name">Fin de vida util</field>
+			<field name="flow_stop">True</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'finVidaUtil'})</field>
+		</record>
+		
+		<!-- Declaración de las transiciones -->
+		<record id="trans_almacen_alquilado" model="workflow.transition">
+			<field name="act_from" ref="act_maquina_almacen" />
+			<field name="act_to" ref="act_maquina_alquilada" />
+			<field name="signal">to_alquilar</field>
+		</record>
+		
+		<record id="trans_alquilado_averia" model="workflow.transition">
+			<field name="act_from" ref="act_maquina_alquilada" />
+			<field name="act_to" ref="act_maquina_averia" />
+			<field name="signal">to_averiada</field>
+		</record>
+		
+		<record id="trans_alquilado_devuelto" model="workflow.transition">
+			<field name="act_from" ref="act_maquina_alquilada" />
+			<field name="act_to" ref="act_maquina_devuelto" />
+			<field name="signal">to_devolver</field>
+		</record>
+		
+		<record id="trans_devuelto_almacen" model="workflow.transition">
+			<field name="act_from" ref="act_maquina_devuelto" />
+			<field name="act_to" ref="act_maquina_almacen" />
+			<field name="signal">to_devalmacen</field>
+		</record>
+		
+		<record id="trans_averia_almacen" model="workflow.transition">
+			<field name="act_from" ref="act_maquina_averia" />
+			<field name="act_to" ref="act_maquina_almacen" />
+			<field name="signal">to_avalmacen</field>
+		</record>
+		
+		<record id="trans_almacen_fin" model="workflow.transition">
+			<field name="act_from" ref="act_maquina_almacen" />
+			<field name="act_to" ref="act_maquina_fin" />
+			<field name="signal">to_fin</field>
+		</record>
+		
+    </data>
+</openerp>

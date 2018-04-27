@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="act_empleado" model="ir.actions.act_window">
+			<field name="name">Empleados</field>
+			<field name="res_model">empleado</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- <menuitem id="empleado_submenu" name="Empleados" parent="alquiler" 
+			action="act_empleado" /> -->
+		<menuitem id="menu_empleado_tree" name="Ver empleados"
+			parent="usuarios_submenu" action="act_empleado" />
+
+		<record model="ir.ui.view" id="view_empleado_form">
+			<field name="name">view_empleado_form</field>
+			<field name="model">empleado</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="form_string">
+					<group col="4" colspan="4">
+						<field name="dni" />
+						<field name="name" />
+						<field name="apellidos" />
+						<field name="telefono" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_empleado_tree">
+			<field name="name">view_empleado_tree</field>
+			<field name="model">empleado</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="tree_string">
+					<field name="dni" />
+					<field name="name" />
+					<field name="apellidos" />
+					<field name="telefono" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Category Search View -->
+		<record model="ir.ui.view" id="view_empleado_search">
+			<field name="name">view_empleado_search</field>
+			<field name="model">empleado</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Empleados">
+					<field name="dni" />
+					<field name="name" />
+					<field name="apellidos" />
+					<field name="telefono" />
+				</search>
+			</field>
+		</record>
+
+	</data>
+</openerp>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    	<record id="wkf_pedido" model="workflow">
+			<field name="name">pedido.basic</field>
+			<field name="osv">pedido</field>
+			<field name="on_create">True</field>
+		</record>
+    	
+    	<!-- Declaración de nodos -->
+		<record id="act_pedido_registrado" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_pedido" />
+			<field name="flow_start">True</field>
+			<field name="name">Registrado</field>
+			<field name="kind">dummy</field>
+		</record>
+    	
+    	<record id="act_pedido_stock" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_pedido" />
+			<field name="name">En stock</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'stock'})</field>
+		</record>
+		
+		<record id="act_pedido_Sin_stock" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_pedido" />
+			<field name="name">Sin stock</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'Sin_stock'})</field>
+		</record>
+		
+		<record id="act_pedido_salida" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_pedido" />
+			<field name="name">Salida de almacen</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'salida'})</field>
+		</record>
+		
+		<record id="act_pedido_transito" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_pedido" />
+			<field name="name">En transito</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'transito'})</field>
+		</record>
+		
+		<record id="act_pedido_localidad" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_pedido" />
+			<field name="name">En su localidad</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'localidad'})</field>
+		</record>
+    	
+    	<record id="act_pedido_entregado" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_pedido" />
+			<field name="name">Pedido entregado</field>
+			<field name="flow_stop">True</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'entregado'})</field>
+		</record>
+		
+		<!-- Declaración de las transiciones -->
+		<record id="trans_registrado_stock" model="workflow.transition">
+			<field name="act_from" ref="act_pedido_registrado" />
+			<field name="act_to" ref="act_pedido_stock" />
+			<field name="signal">to_stock</field>
+		</record>
+		
+		<record id="trans_registrado_sin_stock" model="workflow.transition">
+			<field name="act_from" ref="act_pedido_registrado" />
+			<field name="act_to" ref="act_pedido_Sin_stock" />
+			<field name="signal">to_sin_stock</field>
+		</record>
+		
+		<record id="trans_sin_stock_stock" model="workflow.transition">
+			<field name="act_from" ref="act_pedido_Sin_stock" />
+			<field name="act_to" ref="act_pedido_stock" />
+			<field name="signal">to_stock_sin</field>
+		</record>
+		
+		<record id="trans_stock_salida" model="workflow.transition">
+			<field name="act_from" ref="act_pedido_stock" />
+			<field name="act_to" ref="act_pedido_salida" />
+			<field name="signal">to_salida</field>
+		</record>
+		
+		<record id="trans_salida_transito" model="workflow.transition">
+			<field name="act_from" ref="act_pedido_salida" />
+			<field name="act_to" ref="act_pedido_transito" />
+			<field name="signal">to_transito</field>
+		</record>
+		
+		<record id="trans_transito_localidad" model="workflow.transition">
+			<field name="act_from" ref="act_pedido_transito" />
+			<field name="act_to" ref="act_pedido_localidad" />
+			<field name="signal">to_localidad</field>
+		</record>
+		
+		<record id="trans_localidad_entregado" model="workflow.transition">
+			<field name="act_from" ref="act_pedido_localidad" />
+			<field name="act_to" ref="act_pedido_entregado" />
+			<field name="signal">to_entregado</field>
+		</record>
+		
+    </data>
+</openerp>

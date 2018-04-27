@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="act_devolucion" model="ir.actions.act_window">
+			<field name="name">Devoluciones</field>
+			<field name="res_model">devolucion</field>
+			<field name="view_model">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- <menuitem name="Devolucion" id="devolucion_submenu" parent="alquiler" 
+			sequence="100" /> -->
+		<menuitem id="menu_devolucion_tree" name="Ver devoluciones"
+			parent="alquiler_submenu" action="act_devolucion" />
+
+		<record model="ir.ui.view" id="view_devolucion_form">
+			<field name="name">view_devolucion_form</field>
+			<field name="model">devolucion</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="form_string">
+					<group col="4" colspan="4">
+						<group>
+							<field name="cliente" />
+							<field name="administrativo" />
+							<field name="fecha_devolucion" />
+						</group>
+						<field name="name" />
+					</group>
+					
+					<notebook>
+						<page string="Maquinas devueltas">
+							<field name="maquinas" widget="many2many" mode="tree">
+								<tree string="tree_string">
+									<field name="maquina" />
+									<field name="modelo" />
+									<field name="name" />
+									<field name="precio_alquiler" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+					 
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_devolucion_tree">
+			<field name="name">view_devolucion_tree</field>
+			<field name="model">devolucion</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="tree_string">
+					<field name="cliente" />
+					<field name="administrativo" />
+					<field name="fecha_devolucion" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Category Search View -->
+		<record model="ir.ui.view" id="view_devolucion_search">
+			<field name="name">view_devolucion_search</field>
+			<field name="model">devolucion</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Devoluciones">
+					<field name="cliente" />
+					<field name="administrativo" />
+					<field name="fecha_devolucion" />
+					<field name="name" />
+
+				</search>
+			</field>
+		</record>
+
+	</data>
+</openerp>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+	<data>
+
+		<record id="act_proveedor" model="ir.actions.act_window">
+			<field name="name">Proveedores</field>
+			<field name="res_model">proveedor</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form</field>
+		</record>
+
+		<menuitem name="Proveedor" id="proveedor_submenu" parent="alquiler"
+			sequence="100" />
+		<menuitem id="menu_proveedor_tree" name="Ver proveedores"
+			parent="proveedor_submenu" action="act_proveedor"></menuitem>
+
+		<record model="ir.ui.view" id="view_proveedores_form">
+			<field name="name">view_proveedores_form</field>
+			<field name="model">proveedor</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="form_string">
+					<group col="4" colspan="4">
+						<field name="name" />
+						<field name="cif" />
+						<field name="direccion" />
+						<field name="telefono" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_proveedores_tree">
+			<field name="name">view_alquiler_clientes_tree</field>
+			<field name="model">proveedor</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="tree_string">
+					<field name="name" />
+					<field name="cif" />
+					<field name="direccion" />
+					<field name="telefono" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Category Search View -->
+		<record model="ir.ui.view" id="view_proveedor_search">
+			<field name="name">view_proveedor_search</field>
+			<field name="model">proveedor</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Proveedores">
+					<field name="name" />
+					<field name="cif" />
+					<field name="direccion" />
+					<field name="telefono" />
+				</search>
+			</field>
+		</record>
+
+		<!-- Category Kanban View -->
+		<record model="ir.ui.view" id="view_proveedor_kanban">
+			<field name="name">view_proveedor_kanban</field>
+			<field name="model">proveedor</field>
+			<field name="type">kanban</field>
+			<field name="arch" type="xml">
+				<kanban>
+					<templates>
+						<t t-name="kanban-box">
+							<div class="custom">
+								<div class="oe_resource_vignette">
+									<div class="oe_resource_details">
+										<ul>
+											<li>
+												<h4 class="oe_partner_heading">
+													<a type="open">
+														<field name="name" />
+													</a>
+												</h4>
+											</li>
+											<li>
+												<i>CIF: </i>
+												<field name="cif" />
+											</li>
+											<li>
+												<i>Telefono: </i>
+												<field name="telefono" />
+											</li>
+											<li>
+												<i>Direccion: </i>
+												<field name="direccion" />
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</t>
+					</templates>
+				</kanban>
+			</field>
+		</record>
+
+	</data>
+</openerp>
+
+            

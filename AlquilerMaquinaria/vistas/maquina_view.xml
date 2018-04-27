@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record id="act_maquina" model="ir.actions.act_window">
+			<field name="name">Maquinas</field>
+			<field name="res_model">maquina</field>
+			<field name="view_model">form</field>
+			<field name="view_mode">kanban,tree,form,graph</field>
+		</record>
+
+		<menuitem name="Maquina" id="maquina_submenu" parent="alquiler"
+			sequence="100" />
+		<menuitem id="menu_maquina_tree" name="Ver maquinas" parent="maquina_submenu"
+			action="act_maquina"></menuitem>
+
+		<record model="ir.ui.view" id="view_maquina_form">
+			<field name="name">view_maquina_form</field>
+			<field name="model">maquina</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="form_string">
+					<group col="4" colspan="4">
+						<field name="name" />
+						<field name="modelo" />
+						<field name="maquina" />
+						<field name="proveedor" />
+						<field name="precio_alquiler" />
+						<field name="foto" widget="image" options='{"preview_image": "image_medium", "size": [90, 90]}'/>
+						<field name="descripcion" />
+					</group>
+					<group col="6" colspan="6">
+						<notebook>
+							<page string="Maquinas alquiladas">
+								<field name="alquileres" widget="many2many" mode="tree">
+									<tree>
+										<field name="cliente"></field>
+										<field name="fecha_alquiler"></field>
+										<field name="fecha_fin"></field>
+										<field name="importe"></field>
+									</tree>
+								</field>
+							</page>
+							<page string="Maquinas devueltas">
+								<field name="devoluciones" widget="many2many" mode="tree">
+									<tree string="tree_string">
+										<field name="cliente" />
+										<field name="administrativo" />
+										<field name="fecha_devolucion" />
+										<field name="name" />
+									</tree>
+								</field>
+							</page>
+						</notebook>
+					</group>
+					<separator string="Workflow" colspan="6" />
+					<group col="6" colspan="6">
+						<group col="4" colspan="4">
+							<field name='state' widget='statusbar'
+								statusbar_visible="almacen,alquilado,devuelto,averia,finVidaUtil" />
+						</group>
+						<group col="2" colspan="2">
+							<button name="to_fin" states="almacen" string="Fin de vida util"
+								icon="gtk-apply" />
+							<button name="to_avalmacen" states="averia" string="Devolver a almacen"
+								icon="gtk-ok" />
+							<button name="to_devalmacen" states="devuelto" string="Devolver a almacen"
+								icon="gtk-ok" />
+							<button name="to_devolver" states="alquilado" string="Devolver maquina"
+								icon="gtk-ok" />
+							<button name="to_averiada" states="alquilado" string="Mandar a averias"
+								icon="gtk-ok" />
+							<button name="to_alquilar" states="almacen" string="Alquilar"
+								icon="gtk-ok" />
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_maquina_tree">
+			<field name="name">view_maquina_tree</field>
+			<field name="model">maquina</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="tree_string">
+					<field name="name" />
+					<field name="modelo" />
+					<field name="maquina" />
+					<field name="descripcion" />
+					<field name="precio_alquiler" />
+					<field name="proveedor" />
+					<field name="foto" />
+					<field name="alquileres" colspan="4" widget="many2many" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Category Search View -->
+		<record model="ir.ui.view" id="view_maquina_search">
+			<field name="name">view_maquina_search</field>
+			<field name="model">maquina</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Maquinas">
+					<group string='FILTROS DE BUSQUEDA..'>
+						<filter string="Precio maquinas mayores a 20€" domain="[('precio_alquiler','>','20')]" />
+						<filter string="Precio maquinas mayores a 40€" domain="[('precio_alquiler','>','40')]" />
+						<filter string="Precio maquinas mayores a 80€" domain="[('precio_alquiler','>','80')]" />
+					</group>
+					<field name="name" />
+					<field name="modelo" />
+					<field name="maquina" />
+					<field name="precio_alquiler" />
+					<field name="proveedor" />
+
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_maquina_graph">
+			<field name="name">view_maquina_graph</field>
+			<field name="model">maquina</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph string="Maquina por precio" type="pie">
+					<field name="modelo" />
+					<field name="precio_alquiler" />
+				</graph>
+			</field>
+		</record>
+
+		<!-- Category Kanban View -->
+		<record model="ir.ui.view" id="view_maquina_kanban">
+			<field name="name">view_maquina_kanban</field>
+			<field name="model">maquina</field>
+			<field name="type">kanban</field>
+			<field name="arch" type="xml">
+				<kanban>
+					<templates>
+						<t t-name="kanban-box">
+							<div class="custom">
+								<div class="oe_resource_vignette">
+									<div class="oe_resource_image">
+										<a type="edit">
+											<img t-att-src="kanban_image('maquina', 'foto', record.id.value)"
+												class="oe_resource_picture" width="100px"/>
+										</a>
+									</div>
+									<div class="oe_resource_details">
+										<ul>
+											<li>
+												<h4 class="oe_partner_heading">
+													<a type="open">
+														<field name="name" />
+													</a>
+												</h4>
+											</li>
+											<li>
+												<i>Modelo: </i>
+												<field name="modelo" />
+											</li>
+											<li>
+												<i>Maquina: </i>
+												<field name="maquina" />
+											</li>
+											<li>
+												<i>Precio alquiler: </i>
+												<field name="precio_alquiler" />
+											</li>
+
+										</ul>
+									</div>
+								</div>
+							</div>
+						</t>
+					</templates>
+				</kanban>
+			</field>
+		</record>
+
+	</data>
+</openerp>

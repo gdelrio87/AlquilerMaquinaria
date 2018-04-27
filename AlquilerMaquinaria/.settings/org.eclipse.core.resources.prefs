@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+encoding/__init__.py=utf-8
+encoding/__openerp__.py=utf-8
+encoding/administrativo.py=utf-8
+encoding/alquiler.py=utf-8
+encoding/averia.py=utf-8
+encoding/cliente.py=utf-8
+encoding/devolucion.py=utf-8
+encoding/empleado.py=utf-8
+encoding/maquina.py=utf-8
+encoding/pedido.py=utf-8
+encoding/proveedor.py=utf-8
+encoding/tecnico.py=utf-8

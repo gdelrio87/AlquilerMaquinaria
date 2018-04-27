@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.actions.act_window" id="act_pedido">
+			<field name="name">pedido</field>
+			<field name="res_model">pedido</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="pedido_menu" name="Pedido" parent="alquiler"
+			sequence="100" />
+		<menuitem id="pedido_submenu" name="ver Pedidos" parent="pedido_menu"
+			action="act_pedido" sequence="110" />
+
+		<record model="ir.ui.view" id="pedido_form_view">
+			<field name="name">pedido_form</field>
+			<field name="model">pedido</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="form_string">
+					<field name="name" />
+					<field name="idpedido" />
+					<field name="administrativo" />
+					<field name="importe" />
+					<field name="proveedor" />
+					<separator string="Workflow" colspan="6" />
+					<group col="6" colspan="6">
+						<group col="4" colspan="4">
+							<field name='state' widget='statusbar'
+								statusbar_visible="registrado,Sin_stock,stock,salida,transito,localidad,entregado" />
+						</group>
+						<group col="2" colspan="2">
+							<button name="to_sin_stock" states="registrado" string="Sin stock"
+								icon="gtk-ok" />
+							<button name="to_stock" states="registrado" string="Stock"
+								icon="gtk-ok" />
+							<button name="to_stock_sin" states="Sin_stock" string="Stock"
+								icon="gtk-ok" />
+							<button name="to_salida" states="stock" string="Salida"
+								icon="gtk-ok" />
+							<button name="to_transito" states="salida" string="En transito"
+								icon="gtk-ok" />
+							<button name="to_localidad" states="transito" string="En su localidad"
+								icon="gtk-ok" />
+								<button name="to_entregado" states="localidad" string="Entregado"
+								icon="gtk-apply" />
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="pedido_tree_view">
+			<field name="name">pedido_tree</field>
+			<field name="model">pedido</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="tree_string">
+					<field name="name" />
+					<field name="idpedido" />
+					<field name="importe" />
+					<field name="administrativo" />
+					<field name="proveedor" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Category Search View -->
+		<record model="ir.ui.view" id="view_pedido_search">
+			<field name="name">view_pedido_search</field>
+			<field name="model">pedido</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Pedidos">
+					<field name="name" />
+					<field name="idpedido" />
+					<field name="importe" />
+					<field name="administrativo" />
+					<field name="proveedor" />
+				</search>
+			</field>
+		</record>
+
+	</data>
+</openerp>

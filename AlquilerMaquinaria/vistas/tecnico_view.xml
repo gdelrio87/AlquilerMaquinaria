@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="act_tecnico" model="ir.actions.act_window">
+			<field name="name">Tecnico</field>
+			<field name="res_model">tecnico</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form</field>
+		</record>
+
+		<!--<menuitem id="tecnico_submenu" name="Empleados" parent="alquiler" sequence="100" 
+			action="act_administrativo" /> -->
+		<menuitem id="menu_tecnico_tree" name="Ver tecnico" parent="empleados_submenu"
+			action="act_tecnico" />
+
+		<record model="ir.ui.view" id="view_tecnico_form">
+			<field name="name">view_tecnico_form</field>
+			<field name="model">tecnico</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="form_string">
+					<group col="4" colspan="4">
+						<field name="dni" />
+						<field name="name" />
+						<field name="apellidos" />
+						<field name="telefono" />
+						<field name="email"></field>
+						<field name="especialidad" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_tecnico_tree">
+			<field name="name">view_tecnico_tree</field>
+			<field name="model">tecnico</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="tree_string">
+					<field name="dni" />
+					<field name="name" />
+					<field name="apellidos" />
+					<field name="telefono" />
+					<field name="email"></field>
+					<field name="especialidad" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Category Search View -->
+		<record model="ir.ui.view" id="view_tecnico_search">
+			<field name="name">view_tecnico_search</field>
+			<field name="model">tecnico</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Tecnicos">
+					<field name="dni" />
+					<field name="name" />
+					<field name="apellidos" />
+					<field name="telefono" />
+					<field name="email"></field>
+					<field name="especialidad" />
+				</search>
+			</field>
+		</record>
+		
+			<!-- Category Kanban View -->
+		<record model="ir.ui.view" id="view_tecnico_kanban">
+			<field name="name">view_tecnico_kanban</field>
+			<field name="model">tecnico</field>
+			<field name="type">kanban</field>
+			<field name="arch" type="xml">
+				<kanban>
+					<templates>
+						<t t-name="kanban-box">
+							<div class="custom">
+								<div class="oe_resource_vignette">
+									<div class="oe_resource_details">
+										<ul>
+											<li>
+												<h4 class="oe_partner_heading">
+													<a type="open">
+														<field name="name" />
+													</a>
+												</h4>
+											</li>
+											<li>
+												<i>Email: </i>
+												<a href="mailto:email">
+													<field name="email" />
+												</a>
+											</li>
+											<li>
+												<i>DNI: </i>
+												<field name="dni" />
+											</li>
+											<li>
+												<i>Telefono: </i>
+												<field name="telefono" />
+											</li>
+											<li>
+												<i>Especialidad: </i>
+												<field name="especialidad" />
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</t>
+					</templates>
+				</kanban>
+			</field>
+		</record>
+
+	</data>
+</openerp>

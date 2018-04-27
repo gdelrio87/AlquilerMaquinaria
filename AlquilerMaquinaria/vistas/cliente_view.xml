@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record id="act_cliente" model="ir.actions.act_window">
+			<field name="name">Clientes</field>
+			<field name="res_model">cliente</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">kanban,tree,form</field>
+		</record>
+		<menuitem id="clientes_submenu" name="Clientes" parent="alquiler"
+			sequence="100" action="act_cliente" />
+
+		<menuitem id="menu_cliente_tree" name="Ver clientes" parent="clientes_submenu"
+			action="act_cliente"></menuitem>
+
+		<record model="ir.ui.view" id="view_alquiler_clientes_form">
+			<field name="name">view_alquiler_clientes_form</field>
+			<field name="model">cliente</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="form_string">
+					<group col="4" colspan="4">
+						<field name="name" />
+						<field name="apellidos" />
+						<field name="dni" />
+						<field name="email" />
+						<field name="telefono" />
+					</group>
+					<newline></newline>
+					<separator></separator>
+					<group col="4" colspan="4">
+						<field name="domicilio" />
+						<field name="ciudad" />
+						<field name="provincia" on_change="onchange_provincia(provincia)" />
+						<field name="cp" />
+						<field name="pais" />
+					</group>
+
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_alquiler_clientes_tree">
+			<field name="name">view_alquiler_clientes_tree</field>
+			<field name="model">cliente</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="tree_string">
+					<field name="name" />
+					<field name="apellidos" />
+					<field name="dni" />
+					<field name="email" />
+					<field name="telefono" />
+					<field name="domicilio" />
+					<field name="ciudad" />
+					<field name="provincia" />
+					<field name="cp" />
+					<field name="pais" />
+				</tree>
+			</field>
+		</record>
+
+		<!-- Category Search View -->
+		<record model="ir.ui.view" id="view_cliente_search">
+			<field name="name">view_cliente_search</field>
+			<field name="model">cliente</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+				<search string="Averias">
+					<field name="name" />
+					<field name="apellidos" />
+					<field name="dni" />
+					<field name="telefono" />
+					<field name="domicilio" />
+					<field name="ciudad" />
+					<field name="provincia" />
+					<field name="cp" />
+					<field name="pais" />
+				</search>
+			</field>
+		</record>
+
+		<!-- Category Kanban View -->
+		<record model="ir.ui.view" id="view_cliente_kanban">
+			<field name="name">view_cliente_kanban</field>
+			<field name="model">cliente</field>
+			<field name="type">kanban</field>
+			<field name="arch" type="xml">
+				<kanban>
+					<templates>
+						<t t-name="kanban-box">
+							<div class="custom">
+								<div class="oe_resource_vignette">
+									<div class="oe_resource_details">
+										<ul>
+											<li>
+												<h4 class="oe_partner_heading">
+													<a type="open">
+														<field name="name" />
+													</a>
+												</h4>
+											</li>
+											<li>
+												<i>Email: </i>
+												<a href="mailto:email">
+													<field name="email" />
+												</a>
+											</li>
+											<li>
+												<i>DNI: </i>
+												<field name="dni" />
+											</li>
+											<li>
+												<i>Telefono: </i>
+												<field name="telefono" />
+											</li>
+											<li>
+												<i>Ciudad: </i>
+												<field name="ciudad" />
+											</li>
+											<li>
+												<i>Provincia: </i>
+												<field name="provincia" />
+											</li>
+											<li>
+												<i>CP: </i>
+												<field name="cp" />
+											</li>
+											<li>
+												<i>Pais: </i>
+												<field name="pais" />
+											</li>
+
+										</ul>
+									</div>
+								</div>
+							</div>
+						</t>
+					</templates>
+				</kanban>
+			</field>
+		</record>
+
+	</data>
+</openerp>
